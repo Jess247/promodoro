@@ -1,17 +1,27 @@
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import {Button} from 'antd'
+import { useEffect, useState } from 'react'
 
 function Progress(){
-    const percentage = 60
+    const [time, setTime] = useState(1500)
+    const [timeFormatted, setTimeFormatted] = useState('25:00')
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+
+        }, 1000)
+    }, [])
+
     return (
         <div className='progress-container'>
             <CircularProgressbar 
-                value={percentage}
-                text={`25:00`} 
+                value={time}
+                maxValue={1500}
+                text={`${timeFormatted}`} 
                 styles={buildStyles({
                     strokeLinecap: 'round',
-                    pathColor: `rgba(43, 40, 128, ${percentage / 100})`,
+                    pathColor: `rgba(43, 40, 128, 1)`,
                     textColor: '#fefefe',
                     trailColor: 'rgba(40, 32, 55,.6)',
                     fontFamily: 'sans serif'
