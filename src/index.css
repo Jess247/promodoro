@@ -13,4 +13,6 @@
 
 body {
   background-color: var(--bg-clr);
+  color: var(--font-clr);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
