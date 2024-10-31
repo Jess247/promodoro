@@ -5,18 +5,37 @@ import { useEffect, useState } from 'react'
 
 function Progress(){
     const [time, setTime] = useState(1500)
+    const [progressVal, setProgressVal] = useState(0)
     const [timeFormatted, setTimeFormatted] = useState('25:00')
+    const [isOn, setIsOn] = useState(false)
+
+    console.log(isOn)
 
     useEffect(() => {
-        const timer = setInterval(() => {
+        let timer 
 
-        }, 1000)
-    }, [])
+        if(isOn) {
+            timer = setInterval(() => {
+                setTime(prevTime => prevTime - 1)
+                setProgressVal(prevProgressVal => prevProgressVal + 1)
+                formatTime(time)
+            }, 1000)
+        }
+
+        return () => clearInterval(timer)
+    }, [time, isOn])
+
+    const formatTime = (time) => {
+        let minutes = Math.floor(time / 60)
+        let seconds = Math.floor(time % 60)
+        
+        setTimeFormatted(`${minutes  < 10 ?  '0' + minutes : minutes}:${seconds < 10 ? '0'+ seconds : seconds}`)
+    }
 
     return (
         <div className='progress-container'>
             <CircularProgressbar 
-                value={time}
+                value={progressVal}
                 maxValue={1500}
                 text={`${timeFormatted}`} 
                 styles={buildStyles({
@@ -26,8 +45,11 @@ function Progress(){
                     trailColor: 'rgba(40, 32, 55,.6)',
                     fontFamily: 'sans serif'
             })}
-        />
-            <Button style={{background:'#2b2880', color:'#fefefe', fontWeight:'700', border:'none'}}>Start Timer</Button>
+            />
+            <span>Stay focused</span>
+            <Button 
+                style={{background:'#2b2880', color:'#fefefe', fontWeight:'700', border:'none'}}
+                onClick={() => setIsOn(prevIsOn => !prevIsOn)}>Start Timer</Button>
         </div>
     )
 } 

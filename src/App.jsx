@@ -8,7 +8,7 @@ function App() {
   return (
     <main className='main'>
       <Header/>
-    <Progress/>
+      <Progress/>
     </main>
   )
 }
