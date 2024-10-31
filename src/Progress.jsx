@@ -2,14 +2,17 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import {Button} from 'antd'
 import { useEffect, useState } from 'react'
+import useSound from 'use-sound'
+import notificationSound from './assets/sounds/sound.mp3'
 
 function Progress(){
-    const [time, setTime] = useState(30)
+    const [time, setTime] = useState(1500)
     const [progressVal, setProgressVal] = useState(0)
     const [timeFormatted, setTimeFormatted] = useState('25:00')
     const [isOn, setIsOn] = useState(false)
     const [isBreak, setIsBreak] = useState(false)
     const [maxVal, setMaxVal] = useState(1500)
+    const [playSound] = useSound(notificationSound)
 
     const focusTime = 1500
     const breakTime = 300
@@ -24,6 +27,7 @@ function Progress(){
                 formatTime(time)
             }, 1000)
         } else if(isOn && time === 0){
+            playSound()
             setIsOn(false)
             setIsBreak(true)
             setProgressVal(0)
@@ -38,6 +42,7 @@ function Progress(){
                 formatTime(time)
             }, 1000)
         } else if(isBreak && time === 0) {
+            playSound()
             setIsOn(true)
             setIsBreak(false)
             setProgressVal(0)
@@ -53,8 +58,7 @@ function Progress(){
         let seconds = Math.floor(time % 60)
         
         setTimeFormatted(`
-            ${minutes  < 10 ?  '0' + minutes : minutes}:
-            ${seconds < 10 ? '0'+ seconds : seconds}
+            ${minutes  < 10 ?  '0' + minutes : minutes}:${seconds < 10 ? '0'+ seconds : seconds}
             `)
     }
 
